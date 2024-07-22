@@ -3,6 +3,14 @@ import { getEarthquake } from './getEarthquake';
 import { getRiverDicharge } from './getRiverDischarge';
 import earthquakeAlert from '../controllers/earthquakeAlert';
 import { sendMessage } from './push';
+import { getAirPollutionCurrent, getAirPollutionForecast } from './getAirPollution';
+import { getFireWeather } from './fire';
+import { getPrecipitation } from './precipitation';
+import { getWeather } from './weather';
+import riverDischargeAlert from '../controllers/riverDischarge';
+import dotenv from 'dotenv';
+
+dotenv.config()
 
 const message = async ()=>{
     const tokens = ['ExponentPushToken[IDkakXEPDXCy-NU-SmBs13]', 'ExponentPushToken[_ednsVAJQk7JnpfF3wTlxC]']
@@ -20,13 +28,10 @@ const message = async ()=>{
 }
 
 export const start = async (req : Request, res : Response, next : NextFunction) => {
-    try {
-        const {response, error} = await earthquakeAlert()
-        console.log({response, error})
-        console.log('done ✅')
+    const {response, error} = await getAirPollutionCurrent()
+    if(response)
         res.status(200).json(response)
-    } catch (error) {   
-        res.status(500).json(error.message)
-        console.log("start unsuccessful", error)
-    }
+    if(error)
+        res.status(500).json(error.response.data)
+    console.log('done ✅')
 }

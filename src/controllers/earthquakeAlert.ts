@@ -1,6 +1,7 @@
+import { responseType } from '../../src/utils/@types';
 import { sendMessage } from '../../src/utils/push';
 import { API, apiResponseType } from '../api/api';
-import { getEarthquake } from '../utils/getEarthquake';
+import { getBackendEarthquake, getEarthquake } from '../utils/getEarthquake';
 import { getSettings } from '../utils/getSettings';
 
 const message = async ({
@@ -43,10 +44,12 @@ const constructDescription = ({
     return `${mag && `An earthquake with a magnitude of ${mag} occurred`} ${place && `at ${place}.`} ${time && `The event took place on ${new Date(time)}.`} ${depth && `The depth of the earthquake was ${depth} km.`} ${sig && `A significance of ${sig}`}`
 }
 
-const earthquakeAlert = async () : Promise<apiResponseType> => {
+const earthquakeAlert = async () : Promise<responseType> => {
     let data = {}
 
     const {response : earthquakeData, error : earthquakeError} = await getEarthquake()
+    const {response : backendEarthquakeResponse, error : backendEarthquakeError} = await getBackendEarthquake()
+    console.log({backendEarthquakeResponse, backendEarthquakeError})
     
     if(earthquakeData){
         //loop through each user to filter settings

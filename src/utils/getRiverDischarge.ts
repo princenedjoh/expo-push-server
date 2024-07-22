@@ -5,9 +5,10 @@ export const getRiverDicharge = async (): Promise<responseType> => {
     try {
         const response = await axios.get(`https://flood-api.open-meteo.com/v1/flood`, {
             params : {
-                latitude : 59.1,
-                longitude : 10.75,
-                daily : 'river_discharge'
+                latitude : 6.564404889755423,
+                longitude : 0.017944966136847748,
+                daily : 'river_discharge',
+                forecast_days : 10
             }
         })
         return {response : response?.data}

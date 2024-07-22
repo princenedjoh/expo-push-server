@@ -1,0 +1,2 @@
+direct geocoding (transformation of any location name into geographical coordinates and viceverca) = "http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}"
+reverse geocoding = http://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={lon}&limit={limit}&appid={API key}

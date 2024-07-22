@@ -1,0 +1,1 @@
+export const backendURL = 'https://final-year-project-backend-lzdo.onrender.com/'
