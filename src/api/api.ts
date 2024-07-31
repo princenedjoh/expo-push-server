@@ -26,7 +26,7 @@ class api {
         return {response : response.data}
       } catch (error : any) {
           console.log(error.message)
-          return {error : {message : 'failed', detail : error.response.data}}
+          return {error : {message : 'failed', detail : error.response?.data}}
       }
     };
   
@@ -36,7 +36,7 @@ class api {
         return {response : response.data}
       } catch (error : any) {
           console.log(error.message)
-          return {error : {message : 'failed', detail : error.response.data}}
+          return {error : {message : 'failed', detail : error.response?.data}}
       }
     };
   }

@@ -8,6 +8,7 @@ import { getFireWeather } from './fire';
 import { getPrecipitation } from './precipitation';
 import { getWeather } from './weather';
 import riverDischargeAlert from '../controllers/riverDischarge';
+import airQualityAlert from '../controllers/airquality';
 import dotenv from 'dotenv';
 
 dotenv.config()
@@ -28,10 +29,25 @@ const message = async ()=>{
 }
 
 export const start = async (req : Request, res : Response, next : NextFunction) => {
-    const {response, error} = await getAirPollutionCurrent()
-    if(response)
-        res.status(200).json(response)
-    if(error)
-        res.status(500).json(error.response.data)
+    const {response : airResponse, error : airError} = await airQualityAlert()
+    const {response : earthquakeResponse, error : earthquakeError} = await earthquakeAlert()
+    const {response : waterReponse, error : waterError} = await riverDischargeAlert()
+
+    const response = {
+        airquality : {
+            reponse : airResponse,
+            error : airError
+        },
+        water : {
+            response : waterReponse,
+            error : waterError
+        },
+        earthquake : {
+            reponse : earthquakeResponse,
+            error : earthquakeError
+        }
+    }
+
+    res.status(200).json(response)
     console.log('done ✅')
 }
