@@ -20,7 +20,7 @@ const notify = async ({
                 data: data
             }
         ])
-        console.log(response)
+        console.log({response})
     }
 }
 

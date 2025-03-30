@@ -29,7 +29,7 @@ export const getAirPollutionForecast = async (): Promise<responseType> => {
             return {response : response?.data}
         return {error : {message : 'no response'}}
     } catch (error) {
-        console.log(error.message)
+        console.log({error})
         return {error}
     }
 }

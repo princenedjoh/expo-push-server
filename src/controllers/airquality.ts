@@ -39,47 +39,49 @@ const constructAirQualityDescription = ({
 const airQualityAlert = async () : Promise<responseType> => {
     const {response : users, error : getUserError} = await API.get('/users/search')
     const {response : airquality, error : aqerror} = await getAirPollutionCurrent()
-    console.log(airquality)
     if(airquality){
         const {
             coord,
             list
         } = airquality
-        if(users){
-            for(let user of users){
-                const {response : settings, error} = await API.get('/settings/search/', {params : {id : user.id}})
-                if(error)
-                    return {error}
-                if(!settings)
-                    return {error : {message : 'no settings available'}}
-                
-                const messageOBJ = {
-                    title : 'Air Quality (forecast)',
-                    description : constructAirQualityDescription({
-                        main : list[0].main,
-                        components : list[0].components,
-                        date : list[0].dt,
-                        coordinates : coord
-                    }),
-                    severity : "severe",
-                    category : "atmosphere",
-                    data: JSON.stringify({
-                        coordinates : [coord.lon, coord.lat],
-                        main : list[0].main,
-                        components : list[0].components,
-                        date : list[0].dt,
-                    })
-                }
-                const {response : addAlertResponse, error : addAlertError} = await API.post(`/alert/add/${user.id}/`, messageOBJ)
-                if(addAlertResponse){
-                    await notify({
-                        title : 'Air Quality',
-                        body : messageOBJ.description,
-                        data : JSON.parse(messageOBJ.data)
-                    })
-                } if(getUserError) return {error : getUserError}
+
+        if(!users)
+            return {error : "No users available"}
+
+        for(let user of users){
+            const {response : settings, error} = await API.get('/settings/search/', {params : {id : user.id}})
+            if(error)
+                return {error}
+            if(!settings)
+                return {error : {message : 'no settings available'}}
+            
+            const messageOBJ = {
+                title : 'Air Quality (forecast)',
+                description : constructAirQualityDescription({
+                    main : list[0].main,
+                    components : list[0].components,
+                    date : list[0].dt,
+                    coordinates : coord
+                }),
+                severity : "severe",
+                category : "atmosphere",
+                data: JSON.stringify({
+                    coordinates : [coord.lon, coord.lat],
+                    main : list[0].main,
+                    components : list[0].components,
+                    date : list[0].dt,
+                })
             }
+            const {response : addAlertResponse, error : addAlertError} = await API.post(`/alert/add/${user.id}/`, messageOBJ)
+            if(addAlertResponse){
+                await notify({
+                    title : 'Air Quality',
+                    body : messageOBJ.description,
+                    data : JSON.parse(messageOBJ.data)
+                })
+            } if(getUserError) return {error : getUserError}
         }
+
         return {response : 'completed'}
     } 
     if(aqerror)

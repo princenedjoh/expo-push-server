@@ -63,6 +63,10 @@ const earthquakeAlert = async () : Promise<responseType> => {
                     return {error : {message : 'no settings available'}}
                 for(let feature of earthquakeData.features){
                     const {mag, place, time, sig, title, mmi} = feature.properties
+
+                    if(mag < 6)
+                        continue
+
                     const {coordinates} = feature.geometry
                     const messageOBJ = {
                         title : 'Earthquake Alert (forecast)',
