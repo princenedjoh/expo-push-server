@@ -13,6 +13,7 @@ export const sendMessage = async (messages: any) => {
     let somePushTokens = [
       'ExponentPushToken[IDkakXEPDXCy-NU-SmBs13]',
       'ExponentPushToken[_ednsVAJQk7JnpfF3wTIxC]',
+      'ExponentPushToken[JD5Zz-MxGFOz32gTQ9d8BS]'
     ];
 
     for (let pushToken of somePushTokens) {

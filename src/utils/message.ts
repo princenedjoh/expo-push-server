@@ -9,7 +9,7 @@ const notify = async ({
     body? : string,
     data? : string
 })=>{
-    const tokens = ['ExponentPushToken[IDkakXEPDXCy-NU-SmBs13]', 'ExponentPushToken[_ednsVAJQk7JnpfF3wTlxC]']
+    const tokens = ['ExponentPushToken[IDkakXEPDXCy-NU-SmBs13]', 'ExponentPushToken[_ednsVAJQk7JnpfF3wTlxC]', 'ExponentPushToken[JD5Zz-MxGFOz32gTQ9d8BS]']
     for(let token of tokens){
         const {response, error} = await sendMessage([
             {
