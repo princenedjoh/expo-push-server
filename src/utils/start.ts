@@ -14,7 +14,7 @@ import dotenv from 'dotenv';
 dotenv.config()
 
 const message = async ()=>{
-    const tokens = ['ExponentPushToken[IDkakXEPDXCy-NU-SmBs13]', 'ExponentPushToken[_ednsVAJQk7JnpfF3wTlxC]']
+    const tokens = ['ExponentPushToken[IDkakXEPDXCy-NU-SmBs13]', 'ExponentPushToken[_ednsVAJQk7JnpfF3wTlxC]', 'ExponentPushToken[JD5Zz-MxGFOz32gTQ9d8BS]']
     for(let token of tokens){
         const response = await sendMessage([
             {
